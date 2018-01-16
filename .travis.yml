@@ -14,5 +14,5 @@ go_import_path: github.com/bianlunio/forum
 script:
   - go test -cover -coverpkg=github.com/bianlunio/forum/controllers,github.com/bianlunio/forum/middlewares,github.com/bianlunio/forum/models,github.com/bianlunio/forum/routers,github.com/bianlunio/forum/utils,github.com/bianlunio/forum/utils -covermode=count -coverprofile=coverage.out ./test
 
-#after_success:
-#  - bash <(curl -s https://codecov.io/bash)
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
