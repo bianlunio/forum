@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	. "github.com/bianlunio/forum/models"
-	"github.com/bianlunio/forum/utils"
+	. "forum/models"
+	"forum/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"

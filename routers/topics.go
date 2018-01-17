@@ -1,9 +1,9 @@
 package routers
 
 import (
-	. "github.com/bianlunio/forum/controllers"
-	. "github.com/bianlunio/forum/middlewares"
-	. "github.com/bianlunio/forum/utils"
+	. "forum/controllers"
+	. "forum/middlewares"
+	. "forum/utils"
 )
 
 var TopicRoutes = Routes{

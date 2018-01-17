@@ -3,9 +3,9 @@ package tests
 import (
 	"testing"
 
-	"github.com/bianlunio/forum/models"
-	"github.com/bianlunio/forum/routers"
-	"github.com/bianlunio/forum/utils"
+	"forum/models"
+	"forum/routers"
+	"forum/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo"

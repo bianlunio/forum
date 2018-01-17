@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	. "github.com/bianlunio/forum/models"
+	. "forum/models"
 
 	"github.com/gin-gonic/gin"
 )

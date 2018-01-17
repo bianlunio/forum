@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/bianlunio/forum/models"
-	"github.com/bianlunio/forum/routers"
+	"forum/models"
+	"forum/routers"
 )
 
 func main() {

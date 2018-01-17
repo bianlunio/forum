@@ -10,10 +10,10 @@ services:
 
 install: true
 
-go_import_path: github.com/bianlunio/forum
+go_import_path: forum
 
 script:
-  - go test -cover -coverpkg=github.com/bianlunio/forum/controllers,github.com/bianlunio/forum/middlewares,github.com/bianlunio/forum/models,github.com/bianlunio/forum/routers,github.com/bianlunio/forum/utils,github.com/bianlunio/forum/utils -covermode=count -coverprofile=coverage.out ./tests
+  - go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

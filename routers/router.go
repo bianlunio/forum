@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"github.com/bianlunio/forum/middlewares"
-	"github.com/bianlunio/forum/utils"
+	"forum/middlewares"
+	"forum/utils"
 
 	"github.com/gin-gonic/gin"
 )

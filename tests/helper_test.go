@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/bianlunio/forum/utils"
+	"forum/utils"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
