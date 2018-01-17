@@ -7,6 +7,9 @@ go:
   - 1.9.x
   - master
 
+services:
+  - mongodb
+
 install: true
 
 go_import_path: github.com/bianlunio/forum
