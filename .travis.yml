@@ -1,8 +1,8 @@
 language: go
 sudo: false
 go:
-  - 1.8.x
   - 1.9.x
+  - 1.10.x
   - master
 
 services:
@@ -13,7 +13,7 @@ install: true
 go_import_path: forum
 
 script:
-  - go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tests
+  - go test -cover -coverpkg=./... -coverprofile=coverage.out ./tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
