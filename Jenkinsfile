@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'golang:1.9-alpine'
+    }
+    
+  }
   stages {
     stage('Test') {
       steps {
