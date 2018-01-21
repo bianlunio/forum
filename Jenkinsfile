@@ -2,6 +2,8 @@ pipeline {
   agent {
     docker {
       image 'golang:1.9-alpine'
+      args '''-v "$PWD":/usr/src/forum
+-w /usr/src/forum'''
     }
     
   }
@@ -9,8 +11,11 @@ pipeline {
     stage('Test') {
       steps {
         sh '''pwd
-ls
-go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tests'''
+ls'''
+        ws(dir: '/usr/src/forum') {
+          sh 'ls -l'
+        }
+        
       }
     }
   }
