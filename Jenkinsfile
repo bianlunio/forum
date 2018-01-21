@@ -8,7 +8,9 @@ pipeline {
   stages {
     stage('Test') {
       steps {
-        sh 'go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tests'
+        sh '''pwd
+ls
+go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tests'''
       }
     }
   }
