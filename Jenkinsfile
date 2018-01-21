@@ -31,6 +31,6 @@ go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tes
     }
   }
   environment {
-    GOPATH = '/home/'
+    GOPATH = '/root/'
   }
 }
