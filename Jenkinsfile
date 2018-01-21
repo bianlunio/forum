@@ -19,17 +19,10 @@ fi
 mkdir "${HOME}/src/forum"
 cp -R . ${HOME}/src/forum
 
-ls'''
+docker'''
       }
     }
     stage('Test') {
-      agent {
-        docker {
-          image 'mongo:3.6'
-          args '-p 27017:27017'
-        }
-        
-      }
       steps {
         sh '''cd ${HOME}/src/forum
 
