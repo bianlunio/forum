@@ -6,14 +6,9 @@ pipeline {
     
   }
   stages {
-    stage('') {
+    stage('Test') {
       steps {
-        ws(dir: '/usr/src/forum') {
-          git(url: 'https://github.com/bianlunio/forum.git', branch: 'develop', changelog: true)
-          sh '''pwd
-ls -l'''
-        }
-        
+        sh 'ls'
       }
     }
   }
