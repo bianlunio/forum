@@ -17,9 +17,7 @@ if [ -d "${HOME}/src/forum" ]; then
 fi
 
 mkdir "${HOME}/src/forum"
-cp -R . ${HOME}/src/forum
-
-docker'''
+cp -R . ${HOME}/src/forum'''
       }
     }
     stage('Test') {
