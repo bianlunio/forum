@@ -22,6 +22,13 @@ cp -R . ${HOME}/src/forum
 ls'''
       }
     }
+    stage('Test') {
+      steps {
+        sh '''cd ${HOME}/src/forum
+
+go test -cover -coverpkg=./... -covermode=count -coverprofile=coverage.out ./tests'''
+      }
+    }
   }
   environment {
     GOPATH = '/home/'
