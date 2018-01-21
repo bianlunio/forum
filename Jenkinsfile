@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'golang:1.9-alpine'
-    }
-    
-  }
+  agent none
   stages {
     stage('Test') {
       steps {
@@ -19,6 +14,6 @@ which go'''
     }
   }
   environment {
-    GOPATH = '/usr/'
+    GOPATH = '/home/'
   }
 }
