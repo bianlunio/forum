@@ -1,9 +1,9 @@
-+workspace:
-+  base: /go
-+  path: src/forum
+workspace:
+  base: /go
+  path: src/forum
 
 pipeline:
-  build:
+  test:
     image: golang:1.9-alpine
     commands:
       - go test
