@@ -6,6 +6,7 @@ pipeline:
   test:
     image: golang:1.9-alpine
     commands:
+      - sleep 15
       - go test -cover -coverpkg=./... -covermode=count ./tests
 
 services:
