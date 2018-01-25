@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	defer models.Session.Close()
+	db := models.Connect()
+	defer db.Close()
 	r := routers.SetRouter()
 	r.Run(":8080")
 }

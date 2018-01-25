@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"forum/middlewares"
 	"forum/utils"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +13,7 @@ func SetRouter() *gin.Engine {
 		c.String(200, "pong")
 	})
 
-	apiRouter := r.Group("/api", middlewares.BindDBSession)
+	apiRouter := r.Group("/api")
 
 	utils.BindRouter(apiRouter, "/topics", TopicRoutes)
 

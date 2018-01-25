@@ -7,14 +7,12 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/globalsign/mgo"
 )
 
 type ReturnStruct struct {
 	Page      int                      `json:"page"`
 	Size      int                      `json:"size"`
 	Total     int                      `json:"total"`
-	TotalPage int                      `json:"totalPage"`
 	List      []map[string]interface{} `json:"list"`
 	Detail    map[string]interface{}   `json:"detail"`
 }
@@ -47,13 +45,7 @@ func TestRequest(router *gin.Engine, method string, url string, body string) *ht
 	return w
 }
 
-func GetTestDB(session *mgo.Session) *mgo.Database {
-	return session.DB("forum_test")
-}
-
-func ClearAll(session *mgo.Session) {
-	err := session.DB("forum_test").DropDatabase()
-	if err != nil {
-		panic(err)
-	}
-}
+//func GetTestDB(session *mgo.Session) *mgo.Database {
+//	return session.DB("forum_test")
+//}
+//

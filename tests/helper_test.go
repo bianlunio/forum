@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"forum/utils"
+
 	. "github.com/smartystreets/goconvey/convey"
 )
 

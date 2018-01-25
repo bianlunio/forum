@@ -13,5 +13,5 @@ services:
   forum-postgres:
     image: postgres:10.1-alpine
     environment:
-      - POSTGRES_DB=forum_test
+      - POSTGRES_DB=forum
       - POSTGRES_PASSWORD=forum_test_password

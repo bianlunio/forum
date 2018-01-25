@@ -1,42 +1,75 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
-	"github.com/globalsign/mgo/bson"
+	"github.com/go-pg/pg/orm"
 )
 
+type Pagination map[string]interface{}
+
 type Topic struct {
-	Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-	Title       string        `bson:"title" json:"title"`
-	Content     string        `bson:"content" json:"content"`
-	Top         bool          `bson:"top" json:"top"`
-	Good        bool          `bson:"good" json:"good"`
-	Lock        bool          `bson:"lock" json:"lock"`
-	ReplyCount  int           `bson:"replyCount" json:"replyCount"`
-	VisitCount  int           `bson:"visitCount" json:"visitCount"`
-	CreateAt    *time.Time    `bson:"createAt" json:"createAt"`
-	UpdateAt    *time.Time    `bson:"updateAt,omitempty" json:"updateAt,omitempty"`
-	LastReplyAt *time.Time    `bson:"lastReplyAt,omitempty" json:"lastReplyAt,omitempty"`
-	Tab         string        `bson:"tab" json:"tab,omitempty"`
-	Deleted     bool          `bson:"deleted" json:"deleted,omitempty"`
-	DeleteAt    *time.Time    `bson:"deleteAt,omitempty" json:"deleteAt,omitempty"`
+	Id            int       `sql:"id" json:"id"`
+	Title         string    `sql:"title" json:"title" binding:"required"`
+	Content       string    `sql:"content" json:"content" binding:"required"`
+	Top           bool      `sql:"top,notnull" json:"top"`
+	Good          bool      `sql:"good,notnull" json:"good"`
+	Lock          bool      `sql:"lock,notnull" json:"lock"`
+	ReplyCount    int32     `sql:"replyCount,notnull" json:"replyCount"`
+	VisitCount    int32     `sql:"visitCount,notnull" json:"visitCount"`
+	CreatedAt     time.Time `sql:"createdAt" json:"createdAt"`
+	UpdatedAt     time.Time `sql:"updatedAt" json:"updatedAt"`
+	LastRepliedAt time.Time `sql:"lastRepliedAt" json:"lastRepliedAt"`
+	TabId         int       `sql:"tabId" pg:",fk:Tab" json:"tabId"`
+	Deleted       bool      `sql:"deleted,notnull" json:"deleted"`
+	DeletedAt     time.Time `sql:"deletedAt" json:"deletedAt"`
 }
 
-type Topics []Topic
+func (t Topic) List(page int, size int) Pagination {
+	var topics []Topic
+	query := db.Model(&topics)
+	total, err := query.Count()
+	handleDBError(err)
+	err = db.Model(&topics).Select()
+	handleDBError(err)
+	return Pagination{
+		"page":  page,
+		"size":  size,
+		"total": total,
+		"list":  topics,
+	}
+}
 
-func (t *Topic) Create(title string, content string, tab string) *Topic {
-	now := time.Now()
-	t.Id = bson.NewObjectId()
-	t.Title = title
-	t.Content = content
-	t.Tab = tab
-	t.Top = false
-	t.Good = false
-	t.Lock = false
-	t.ReplyCount = 0
-	t.VisitCount = 0
-	t.CreateAt = &now
-	t.Deleted = false
+func (t Topic) Create() Topic {
+	err := db.Insert(&t)
+	handleDBError(err)
 	return t
+}
+
+func (t Topic) String() string {
+	return fmt.Sprintf("Topic<Id=%d Title=%q>", t.Id, t.Title)
+}
+
+func (t *Topic) BeforeInsert(db orm.DB) error {
+	if t.CreatedAt.IsZero() {
+		now := time.Now()
+		t.CreatedAt = now
+		t.UpdatedAt = now
+	}
+	return nil
+}
+
+func (t *Topic) BeforeUpdate(db orm.DB) error {
+	t.UpdatedAt = time.Now()
+	return nil
+}
+
+type Tab struct {
+	Id   int    `sql:"id"`
+	Name string `sql:"name"`
+}
+
+func (tab Tab) String() string {
+	return fmt.Sprintf("Tab<Id=%d Name=%q>", tab.Id, tab.Name)
 }

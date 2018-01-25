@@ -2,7 +2,7 @@ package routers
 
 import (
 	. "forum/controllers"
-	. "forum/middlewares"
+	//. "forum/middlewares"
 	. "forum/utils"
 )
 
@@ -12,27 +12,27 @@ var TopicRoutes = Routes{
 		Path:    "",
 		Handler: TopicList,
 	},
-	Route{
-		Method:      "GET",
-		Path:        "/:id",
-		MiddleWares: MiddleWares{IDValidator},
-		Handler:     TopicDetail,
-	},
+	//Route{
+	//	Method:      "GET",
+	//	Path:        "/:id",
+	//	MiddleWares: MiddleWares{IDValidator},
+	//	Handler:     TopicDetail,
+	//},
 	Route{
 		Method:  "POST",
 		Path:    "",
 		Handler: CreateTopic,
 	},
-	Route{
-		Method:      "PUT",
-		Path:        "/:id",
-		MiddleWares: MiddleWares{IDValidator},
-		Handler:     EditTopic,
-	},
-	Route{
-		Method:      "DELETE",
-		Path:        "/:id",
-		MiddleWares: MiddleWares{IDValidator},
-		Handler:     DeleteTopic,
-	},
+	//Route{
+	//	Method:      "PUT",
+	//	Path:        "/:id",
+	//	MiddleWares: MiddleWares{IDValidator},
+	//	Handler:     EditTopic,
+	//},
+	//Route{
+	//	Method:      "DELETE",
+	//	Path:        "/:id",
+	//	MiddleWares: MiddleWares{IDValidator},
+	//	Handler:     DeleteTopic,
+	//},
 }

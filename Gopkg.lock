@@ -9,27 +9,44 @@
 
 [[projects]]
   name = "github.com/gin-gonic/gin"
-  packages = [".","binding","render"]
+  packages = [
+    ".",
+    "binding",
+    "render"
+  ]
   revision = "d459835d2b077e44f7c9b453505ee29881d5d12d"
   version = "v1.2"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/globalsign/mgo"
-  packages = [".","bson","internal/json","internal/sasl","internal/scram"]
-  revision = "896bbb89d21253a28cd5a7f8b81fe091410cb94d"
+  name = "github.com/go-pg/pg"
+  packages = [
+    ".",
+    "internal",
+    "internal/parser",
+    "internal/pool",
+    "orm",
+    "types"
+  ]
+  revision = "c2405ea05e2013fc1354cf8f61e94152b896ed91"
+  version = "v6.7.0"
 
 [[projects]]
   branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "1e59b77b52bf8e4b449a57e6f79f21226d571845"
+  revision = "c65a0412e71e8b9b3bfd22925720d23c0f054237"
 
 [[projects]]
   branch = "master"
   name = "github.com/gopherjs/gopherjs"
   packages = ["js"]
-  revision = "444abdf920945de5d4a977b572bcc6c674d1e4eb"
+  revision = "178c176a91fe05e3e6c58fa5c989bad19e6cdcb3"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  revision = "1c35d901db3da928c72a72d8458480cc9ade058f"
 
 [[projects]]
   name = "github.com/jtolds/gls"
@@ -45,27 +62,35 @@
 
 [[projects]]
   name = "github.com/smartystreets/assertions"
-  packages = [".","internal/go-render/render","internal/oglematchers"]
+  packages = [
+    ".",
+    "internal/go-render/render",
+    "internal/oglematchers"
+  ]
   revision = "0b37b35ec7434b77e77a4bb29b79677cced992ea"
   version = "1.8.1"
 
 [[projects]]
   name = "github.com/smartystreets/goconvey"
-  packages = ["convey","convey/gotest","convey/reporting"]
+  packages = [
+    "convey",
+    "convey/gotest",
+    "convey/reporting"
+  ]
   revision = "9e8dc3f972df6c8fcc0375ef492c24d0bb204857"
   version = "1.6.3"
 
 [[projects]]
-  branch = "master"
   name = "github.com/ugorji/go"
   packages = ["codec"]
   revision = "9831f2c3ac1068a78f50999a30db84270f647af6"
+  version = "v1.1"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "fff93fa7cd278d84afc205751523809c464168ab"
+  revision = "03467258950d845cd1877eab69461b98e8c09219"
 
 [[projects]]
   name = "gopkg.in/go-playground/validator.v8"
@@ -82,6 +107,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "031889b91f9698393f72cc3bff4a338787b2789917cccfda0bf8ca79bcc3c0d2"
+  inputs-digest = "3c9468f5d1a8bc7597e02bca8b518f0b2c0c40a83efa6d880a65a50760e3c363"
   solver-name = "gps-cdcl"
   solver-version = 1
