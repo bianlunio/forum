@@ -10,5 +10,8 @@ pipeline:
       - go test -cover -coverpkg=./... -covermode=count ./tests
 
 services:
-  forum-mongo:
-    image: mongo:3.6
+  forum-postgres:
+    image: postgres:10.1-alpine
+    environment:
+      - POSTGRES_DB=forum_test
+      - POSTGRES_PASSWORD=forum_test_password
