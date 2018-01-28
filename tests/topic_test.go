@@ -115,30 +115,34 @@ func TestTopicRouter(t *testing.T) {
 		//	})
 		//})
 
-		//Convey("create topic", func() {
-		//	Convey("should success", func() {
-		//		body := `{"title": "t3", "content": "t3t3t3"}`
-		//		w := TestRequest(router, "POST", baseUrl, body)
-		//		So(w.Code, ShouldEqual, 201)
-		//
-		//		var topic models.Topic
-		//		err := db.C("topics").Find(bson.M{"title": "t3"}).One(&topic)
-		//		So(err, ShouldBeNil)
-		//		So(topic.Id.Hex(), ShouldNotBeEmpty)
-		//		So(topic.Title, ShouldEqual, "t3")
-		//		So(topic.Content, ShouldEqual, "t3t3t3")
-		//		So(topic.Deleted, ShouldBeFalse)
-		//		So(topic.DeletedAt, ShouldBeNil)
-		//	})
-		//
-		//	Convey("should fail", func() {
-		//		body := `{}`
-		//		w := TestRequest(router, "POST", baseUrl, body)
-		//		So(w.Code, ShouldEqual, 400)
-		//		data := Response2Dict(w.Body.Bytes())
-		//		So(data["msg"], ShouldEqual, "parameter error")
-		//	})
-		//})
+		Convey("create topic", func() {
+			Convey("should success", func() {
+				body := `{"title": "t3", "content": "t3t3t3"}`
+				w := TestRequest(router, "POST", baseUrl, body)
+				So(w.Code, ShouldEqual, 201)
+				data := Response2Dict(w.Body.Bytes())
+				So(data["id"], ShouldNotBeEmpty)
+				So(data["title"], ShouldEqual, "t3")
+				So(data["content"], ShouldEqual, "t3t3t3")
+
+				//var topic models.Topic
+				//err := db.C("topics").Find(bson.M{"title": "t3"}).One(&topic)
+				//So(err, ShouldBeNil)
+				//So(topic.Id.Hex(), ShouldNotBeEmpty)
+				//So(topic.Title, ShouldEqual, "t3")
+				//So(topic.Content, ShouldEqual, "t3t3t3")
+				//So(topic.Deleted, ShouldBeFalse)
+				//So(topic.DeletedAt, ShouldBeNil)
+			})
+
+			Convey("should fail", func() {
+				body := `{}`
+				w := TestRequest(router, "POST", baseUrl, body)
+				So(w.Code, ShouldEqual, 400)
+				data := Response2Dict(w.Body.Bytes())
+				So(data["msg"], ShouldEqual, "parameter error")
+			})
+		})
 
 		//Convey("edit topic", func() {
 		//	url := utils.JoinUrl(baseUrl, t1.Id.Hex())
