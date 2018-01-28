@@ -15,6 +15,7 @@ var db *pg.DB
 
 func Connect() *pg.DB {
 	db = pg.Connect(&pg.Options{
+		Addr: "localhost:5432",
 		User: "forum",
 		Password: "TSxdMxWB21Bt4j36",
 		Database: "forum",
