@@ -14,8 +14,13 @@ var DEBUG = false
 var db *pg.DB
 
 func Connect() *pg.DB {
+	addr := "localhost:5432"
+
+	if gin.Mode() == gin.TestMode {
+		addr = "forum-db:5432"
+	}
 	db = pg.Connect(&pg.Options{
-		Addr: "localhost:5432",
+		Addr: addr,
 		User: "forum",
 		Password: "TSxdMxWB21Bt4j36",
 		Database: "forum",
