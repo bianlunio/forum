@@ -33,13 +33,14 @@ func TestTopicRouter(t *testing.T) {
 
 		Convey("list topics", func() {
 			Convey("should success", func() {
-				w := utils.TestRequest(router, "GET", baseUrl, "")
+				w := TestRequest(router, "GET", baseUrl, "")
 				So(w.Code, ShouldEqual, 200)
-				data := utils.ListResponse2Dict(w.Body.Bytes())
+				data := ListResponse2Dict(w.Body.Bytes())
 
-				So(data.Page, ShouldEqual, 1)
-				So(data.Total, ShouldEqual, 2)
-				So(data.Size, ShouldEqual, 20)
+				pagination := data.Pagination
+				So(pagination["page"], ShouldEqual, 1)
+				So(pagination["total"], ShouldEqual, 2)
+				So(pagination["limit"], ShouldEqual, 20)
 
 				list := data.List
 				So(list[0]["title"], ShouldEqual, "t1")
@@ -47,40 +48,41 @@ func TestTopicRouter(t *testing.T) {
 				So(list[1]["title"], ShouldEqual, "t2")
 				So(list[1]["content"], ShouldEqual, "t2t2t2")
 
-				//Convey("when size = 1", func() {
-				//	query := utils.Query{"size": "1"}
-				//	url := utils.ParseQueryUrl(baseUrl, query)
-				//	w := utils.TestRequest(router, "GET", url, "")
-				//	So(w.Code, ShouldEqual, 200)
-				//	data := utils.ListResponse2Dict(w.Body.Bytes())
-				//	So(data.Page, ShouldEqual, 1)
-				//	So(data.Total, ShouldEqual, 2)
-				//	So(data.TotalPage, ShouldEqual, 2)
-				//	So(data.Size, ShouldEqual, 1)
-				//
-				//	list := data.List
-				//	So(list[0]["title"], ShouldEqual, "t1")
-				//	So(list[0]["content"], ShouldEqual, "t1t1t1")
-				//})
+				Convey("when limit = 1", func() {
+					query := utils.Query{"limit": "1"}
+					url := utils.ParseQueryUrl(baseUrl, query)
+					w := TestRequest(router, "GET", url, "")
+					So(w.Code, ShouldEqual, 200)
+					data := ListResponse2Dict(w.Body.Bytes())
+
+					pagination := data.Pagination
+					So(pagination["page"], ShouldEqual, 1)
+					So(pagination["total"], ShouldEqual, 2)
+					So(pagination["limit"], ShouldEqual, 1)
+
+					list := data.List
+					So(list[0]["title"], ShouldEqual, "t1")
+					So(list[0]["content"], ShouldEqual, "t1t1t1")
+				})
 			})
 
 			//Convey("should fail", func() {
 			//	Convey("with invalid page number", func() {
 			//		query := utils.Query{"page": "0"}
 			//		url := utils.ParseQueryUrl(baseUrl, query)
-			//		w := utils.TestRequest(router, "GET", url, "")
+			//		w := TestRequest(router, "GET", url, "")
 			//		So(w.Code, ShouldEqual, 400)
-			//		data := utils.Response2Dict(w.Body.Bytes())
-			//		So(data["msg"], ShouldEqual, "pagination error")
+			//		data := Response2Dict(w.Body.Bytes())
+			//		So(data["msg"], ShouldEqual, "Pagination Error")
 			//	})
 			//
 			//	Convey("with invalid size number", func() {
 			//		query := utils.Query{"size": "0"}
 			//		url := utils.ParseQueryUrl(baseUrl, query)
-			//		w := utils.TestRequest(router, "GET", url, "")
+			//		w := TestRequest(router, "GET", url, "")
 			//		So(w.Code, ShouldEqual, 400)
-			//		data := utils.Response2Dict(w.Body.Bytes())
-			//		So(data["msg"], ShouldEqual, "pagination error")
+			//		data := Response2Dict(w.Body.Bytes())
+			//		So(data["msg"], ShouldEqual, "Pagination Error")
 			//	})
 			//})
 		})
@@ -88,10 +90,10 @@ func TestTopicRouter(t *testing.T) {
 		//Convey("get topic detail", func() {
 		//	Convey("should success", func() {
 		//		url := utils.JoinUrl(baseUrl, t1.Id.Hex())
-		//		w := utils.TestRequest(router, "GET", url, "")
+		//		w := TestRequest(router, "GET", url, "")
 		//		So(w.Code, ShouldEqual, 200)
 		//
-		//		data := utils.Response2Dict(w.Body.Bytes())
+		//		data := Response2Dict(w.Body.Bytes())
 		//		So(data["id"], ShouldEqual, t1.Id.Hex())
 		//		So(data["title"], ShouldEqual, "t1")
 		//		So(data["content"], ShouldEqual, "t1t1t1")
@@ -100,15 +102,15 @@ func TestTopicRouter(t *testing.T) {
 		//	Convey("should fail with wrong id", func() {
 		//		dummyId := utils.JoinStrings("123", t1.Id.Hex()[3:])
 		//		url := utils.JoinUrl(baseUrl, dummyId)
-		//		w := utils.TestRequest(router, "GET", url, "")
+		//		w := TestRequest(router, "GET", url, "")
 		//		So(w.Code, ShouldEqual, 404)
 		//	})
 		//
 		//	Convey("should fail with invalid id", func() {
 		//		url := utils.JoinUrl(baseUrl, "someErrorId")
-		//		w := utils.TestRequest(router, "GET", url, "")
+		//		w := TestRequest(router, "GET", url, "")
 		//		So(w.Code, ShouldEqual, 400)
-		//		data := utils.Response2Dict(w.Body.Bytes())
+		//		data := Response2Dict(w.Body.Bytes())
 		//		So(data["msg"], ShouldEqual, "invalid id")
 		//	})
 		//})
@@ -116,7 +118,7 @@ func TestTopicRouter(t *testing.T) {
 		//Convey("create topic", func() {
 		//	Convey("should success", func() {
 		//		body := `{"title": "t3", "content": "t3t3t3"}`
-		//		w := utils.TestRequest(router, "POST", baseUrl, body)
+		//		w := TestRequest(router, "POST", baseUrl, body)
 		//		So(w.Code, ShouldEqual, 201)
 		//
 		//		var topic models.Topic
@@ -131,9 +133,9 @@ func TestTopicRouter(t *testing.T) {
 		//
 		//	Convey("should fail", func() {
 		//		body := `{}`
-		//		w := utils.TestRequest(router, "POST", baseUrl, body)
+		//		w := TestRequest(router, "POST", baseUrl, body)
 		//		So(w.Code, ShouldEqual, 400)
-		//		data := utils.Response2Dict(w.Body.Bytes())
+		//		data := Response2Dict(w.Body.Bytes())
 		//		So(data["msg"], ShouldEqual, "parameter error")
 		//	})
 		//})
@@ -143,7 +145,7 @@ func TestTopicRouter(t *testing.T) {
 		//
 		//	Convey("should success", func() {
 		//		body := `{"title": "t111", "content": "t111t111t111"}`
-		//		w := utils.TestRequest(router, "PUT", url, body)
+		//		w := TestRequest(router, "PUT", url, body)
 		//		So(w.Code, ShouldEqual, 200)
 		//
 		//		var topic models.Topic
@@ -160,9 +162,9 @@ func TestTopicRouter(t *testing.T) {
 		//	Convey("should fail", func() {
 		//		Convey("with empty body", func() {
 		//			body := `{}`
-		//			w := utils.TestRequest(router, "PUT", url, body)
+		//			w := TestRequest(router, "PUT", url, body)
 		//			So(w.Code, ShouldEqual, 400)
-		//			data := utils.Response2Dict(w.Body.Bytes())
+		//			data := Response2Dict(w.Body.Bytes())
 		//			So(data["msg"], ShouldEqual, "parameter error")
 		//		})
 		//
@@ -170,7 +172,7 @@ func TestTopicRouter(t *testing.T) {
 		//			dummyId := utils.JoinStrings("123", t1.Id.Hex()[3:])
 		//			url = utils.JoinUrl(baseUrl, dummyId)
 		//			body := `{"title": "t111", "content": "t111t111t111"}`
-		//			w := utils.TestRequest(router, "PUT", url, body)
+		//			w := TestRequest(router, "PUT", url, body)
 		//			So(w.Code, ShouldEqual, 404)
 		//		})
 		//	})
@@ -179,7 +181,7 @@ func TestTopicRouter(t *testing.T) {
 		//Convey("delete topic", func() {
 		//	Convey("should success", func() {
 		//		url := utils.JoinUrl(baseUrl, t1.Id.Hex())
-		//		w := utils.TestRequest(router, "DELETE", url, "")
+		//		w := TestRequest(router, "DELETE", url, "")
 		//		So(w.Code, ShouldEqual, 204)
 		//		count, err := db.C("topics").Find(bson.M{"_id": t1.Id, "deleted": false}).Count()
 		//		So(err, ShouldBeNil)
@@ -189,7 +191,7 @@ func TestTopicRouter(t *testing.T) {
 		//	Convey("should fail with wrong id", func() {
 		//		dummyId := utils.JoinStrings("123", t1.Id.Hex()[3:])
 		//		url := utils.JoinUrl(baseUrl, dummyId)
-		//		w := utils.TestRequest(router, "DELETE", url, "")
+		//		w := TestRequest(router, "DELETE", url, "")
 		//		So(w.Code, ShouldEqual, 404)
 		//	})
 		//})

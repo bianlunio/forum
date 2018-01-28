@@ -9,6 +9,8 @@ import (
 	"github.com/go-pg/pg/orm"
 )
 
+var DEBUG = false
+
 var db *pg.DB
 
 func Connect() *pg.DB {
@@ -18,7 +20,7 @@ func Connect() *pg.DB {
 		Database: "forum",
 	})
 
-	if gin.Mode() != gin.ReleaseMode {
+	if gin.Mode() != gin.ReleaseMode && DEBUG {
 		db.OnQueryProcessed(func(event *pg.QueryProcessedEvent) {
 			query, err := event.FormattedQuery()
 			if err != nil {

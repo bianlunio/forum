@@ -4,13 +4,13 @@ import (
 	"net/http"
 
 	"forum/models"
-	"forum/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 func TopicList(c *gin.Context) {
-	data := models.Topic{}.List(1, 20)
+	pagination := getPagination(c)
+	data := models.Topic{}.List(pagination)
 	c.JSON(http.StatusOK, data)
 	//db := utils.GetDB(c)
 	//rawQuery := db.C("topics").Find(bson.M{"deleted": false}).Sort("-createdAt")
@@ -23,7 +23,7 @@ func TopicList(c *gin.Context) {
 	//		utils.HandleDBError(c, err)
 	//	}
 	//} else {
-	//	utils.HandleParameterError(c, err)
+	//	handleParameterError(c, err)
 	//}
 }
 
@@ -59,7 +59,7 @@ func CreateTopic(c *gin.Context) {
 		//	c.Status(http.StatusCreated)
 		//}
 	} else {
-		utils.HandleParameterError(c, nil)
+		handleParameterError(c, nil)
 	}
 }
 
@@ -82,7 +82,7 @@ func CreateTopic(c *gin.Context) {
 //			c.Status(http.StatusOK)
 //		}
 //	} else {
-//		utils.HandleParameterError(c, nil)
+//		handleParameterError(c, nil)
 //	}
 //}
 //

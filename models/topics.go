@@ -2,12 +2,14 @@ package models
 
 import (
 	"fmt"
+	"net/url"
 	"time"
 
+	"forum/utils"
+
+	"github.com/gin-gonic/gin"
 	"github.com/go-pg/pg/orm"
 )
-
-type Pagination map[string]interface{}
 
 type Topic struct {
 	Id            int       `sql:"id" json:"id"`
@@ -26,18 +28,24 @@ type Topic struct {
 	DeletedAt     time.Time `sql:"deletedAt" json:"deletedAt"`
 }
 
-func (t Topic) List(page int, size int) Pagination {
+func (t Topic) List(values url.Values) gin.H {
 	var topics []Topic
 	query := db.Model(&topics)
 	total, err := query.Count()
 	handleDBError(err)
-	err = db.Model(&topics).Select()
+	err = db.Model(&topics).
+		Apply(orm.Pagination(values)).
+		Select()
 	handleDBError(err)
-	return Pagination{
-		"page":  page,
-		"size":  size,
-		"total": total,
-		"list":  topics,
+	page := utils.String2Int(values.Get("page"))
+	limit := utils.String2Int(values.Get("limit"))
+	return gin.H{
+		"pagination": Pagination{
+			Page:  page,
+			Limit: limit,
+			Total: total,
+		},
+		"list": topics,
 	}
 }
 

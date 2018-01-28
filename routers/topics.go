@@ -2,15 +2,13 @@ package routers
 
 import (
 	. "forum/controllers"
-	//. "forum/middlewares"
-	. "forum/utils"
 )
 
-var TopicRoutes = Routes{
-	Route{
-		Method:  "GET",
-		Path:    "",
-		Handler: TopicList,
+var TopicRoutes = routes{
+	route{
+		Method:      "GET",
+		Path:        "",
+		Handler:     TopicList,
 	},
 	//Route{
 	//	Method:      "GET",
@@ -18,7 +16,7 @@ var TopicRoutes = Routes{
 	//	MiddleWares: MiddleWares{IDValidator},
 	//	Handler:     TopicDetail,
 	//},
-	Route{
+	route{
 		Method:  "POST",
 		Path:    "",
 		Handler: CreateTopic,

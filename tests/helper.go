@@ -1,4 +1,4 @@
-package utils
+package tests
 
 import (
 	"encoding/json"
@@ -10,11 +10,8 @@ import (
 )
 
 type ReturnStruct struct {
-	Page      int                      `json:"page"`
-	Size      int                      `json:"size"`
-	Total     int                      `json:"total"`
-	List      []map[string]interface{} `json:"list"`
-	Detail    map[string]interface{}   `json:"detail"`
+	Pagination map[string]interface{}   `json:"pagination"`
+	List       []map[string]interface{} `json:"list"`
 }
 
 func ListResponse2Dict(b []byte) (v ReturnStruct) {
@@ -44,8 +41,3 @@ func TestRequest(router *gin.Engine, method string, url string, body string) *ht
 	router.ServeHTTP(w, req)
 	return w
 }
-
-//func GetTestDB(session *mgo.Session) *mgo.Database {
-//	return session.DB("forum_test")
-//}
-//

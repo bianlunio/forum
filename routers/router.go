@@ -1,21 +1,43 @@
 package routers
 
 import (
-	"forum/utils"
-
 	"github.com/gin-gonic/gin"
 )
+
+type MiddleWares []gin.HandlerFunc
+
+type route struct {
+	Method      string
+	Path        string
+	MiddleWares MiddleWares
+	Handler     gin.HandlerFunc
+}
+
+type routes []route
+
+func RouterMapper(g *gin.RouterGroup, rs routes) {
+	for _, route := range rs {
+		handlers := append(route.MiddleWares, route.Handler)
+		g.Handle(route.Method, route.Path, handlers...)
+	}
+}
+
+func bindRouter(g *gin.RouterGroup, relativePath string, rs routes) {
+	RouterMapper(g.Group(relativePath), rs)
+}
+
 
 func SetRouter() *gin.Engine {
 	r := gin.Default()
 
+	gin.Recovery()
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
 
 	apiRouter := r.Group("/api")
 
-	utils.BindRouter(apiRouter, "/topics", TopicRoutes)
+	bindRouter(apiRouter, "/topics", TopicRoutes)
 
 	//authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
 	//    "foo":  "bar",
