@@ -26,7 +26,6 @@ func bindRouter(g *gin.RouterGroup, relativePath string, rs routes) {
 	RouterMapper(g.Group(relativePath), rs)
 }
 
-
 func SetRouter() *gin.Engine {
 	r := gin.Default()
 

@@ -6,9 +6,9 @@ import (
 
 var TopicRoutes = routes{
 	route{
-		Method:      "GET",
-		Path:        "",
-		Handler:     TopicList,
+		Method:  "GET",
+		Path:    "",
+		Handler: TopicList,
 	},
 	//Route{
 	//	Method:      "GET",

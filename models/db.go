@@ -2,6 +2,7 @@ package models
 
 import (
 	"log"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -16,12 +17,12 @@ var db *pg.DB
 func Connect() *pg.DB {
 	addr := "localhost:5432"
 
-	if gin.Mode() == gin.TestMode {
+	if os.Getenv("DRONE") == "true" {
 		addr = "forum-db:5432"
 	}
 	db = pg.Connect(&pg.Options{
-		Addr: addr,
-		User: "forum",
+		Addr:     addr,
+		User:     "forum",
 		Password: "TSxdMxWB21Bt4j36",
 		Database: "forum",
 	})
@@ -54,7 +55,7 @@ func createSchema(db *pg.DB, temp bool) error {
 	for _, model := range models {
 		err := db.CreateTable(model, &orm.CreateTableOptions{
 			IfNotExists: true,
-			Temp: temp,
+			Temp:        temp,
 		})
 		if err != nil {
 			return err
