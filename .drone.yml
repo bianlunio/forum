@@ -7,7 +7,12 @@ pipeline:
     image: golang:1.9-alpine
     commands:
       - sleep 5
-      - go test -cover -coverpkg=./... -covermode=count ./tests
+      - go test -race -cover -coverpkg=./... -covermode=atomic -coverprofile=coverage.out ./tests
+  codecov:
+    image: robertstettner/drone-codecov
+    secrets: [ codecov_token ]
+    files:
+      - coverage.out
 
 services:
   forum-db:
