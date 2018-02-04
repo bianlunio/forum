@@ -20,3 +20,5 @@ services:
     environment:
       - POSTGRES_USER=forum
       - POSTGRES_PASSWORD=TSxdMxWB21Bt4j36
+  gcc:
+    image: gcc:latest
