@@ -6,31 +6,28 @@ import (
 
 var TopicRoutes = routes{
 	route{
-		Method:  "GET",
-		Path:    "",
-		Handler: TopicList,
+		method:  "GET",
+		path:    "",
+		handler: TopicList,
 	},
-	//Route{
-	//	Method:      "GET",
-	//	Path:        "/:id",
-	//	MiddleWares: MiddleWares{IDValidator},
-	//	Handler:     TopicDetail,
-	//},
 	route{
-		Method:  "POST",
-		Path:    "",
-		Handler: CreateTopic,
+		method:  "GET",
+		path:    "/:id",
+		handler: TopicDetail,
 	},
-	//Route{
-	//	Method:      "PUT",
-	//	Path:        "/:id",
-	//	MiddleWares: MiddleWares{IDValidator},
-	//	Handler:     EditTopic,
-	//},
-	//Route{
-	//	Method:      "DELETE",
-	//	Path:        "/:id",
-	//	MiddleWares: MiddleWares{IDValidator},
-	//	Handler:     DeleteTopic,
-	//},
+	route{
+		method:  "POST",
+		path:    "",
+		handler: CreateTopic,
+	},
+	route{
+		method:  "PUT",
+		path:    "/:id",
+		handler: EditTopic,
+	},
+	route{
+		method:  "DELETE",
+		path:    "/:id",
+		handler: DeleteTopic,
+	},
 }

@@ -4,21 +4,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type MiddleWares []gin.HandlerFunc
+type middleWares []gin.HandlerFunc
 
 type route struct {
-	Method      string
-	Path        string
-	MiddleWares MiddleWares
-	Handler     gin.HandlerFunc
+	method      string
+	path        string
+	middleWares middleWares
+	handler     gin.HandlerFunc
 }
 
 type routes []route
 
 func RouterMapper(g *gin.RouterGroup, rs routes) {
 	for _, route := range rs {
-		handlers := append(route.MiddleWares, route.Handler)
-		g.Handle(route.Method, route.Path, handlers...)
+		handlers := append(route.middleWares, route.handler)
+		g.Handle(route.method, route.path, handlers...)
 	}
 }
 
@@ -29,7 +29,6 @@ func bindRouter(g *gin.RouterGroup, relativePath string, rs routes) {
 func SetRouter() *gin.Engine {
 	r := gin.Default()
 
-	gin.Recovery()
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})

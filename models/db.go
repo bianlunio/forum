@@ -15,7 +15,7 @@ var DEBUG = false
 var db *pg.DB
 
 func Connect() *pg.DB {
-	addr := "localhost:5432"
+	addr := "local.server.com:5432"
 
 	if os.Getenv("DRONE") == "true" {
 		addr = "forum-db:5432"
